@@ -1,4 +1,4 @@
-# Hvad bruger jeg dem her til?
+# Downloaded from https://github.com/home-assistant/docker-base example: ghcr.io/home-assistant/amd64-base which is alpine:3.19 https://hub.docker.com/layers/amd64/alpine/3.19/images/sha256-6457d53fb065d6f250e1504b9bc42d5b6c65941d57532c072d929dd0628977d0?context=explore
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
