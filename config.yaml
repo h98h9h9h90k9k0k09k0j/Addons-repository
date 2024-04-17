@@ -1,0 +1,24 @@
+name: "WebMySocket"
+description: "My first websocket!"
+version: "1.0.1"
+slug: "webmysocket"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: services
+ports:
+  8000/tcp: 8000
+  123/tcp: 123
+  88/tcp: 88
+websocket_url: "ws://localhost:9123"
+device_id: "abcde"
+hassio_api: true
+host_dbus: true
+host_network: true
+# Hvis ingress er nødvendigt
+ingress: true
+ingress_port: 88
