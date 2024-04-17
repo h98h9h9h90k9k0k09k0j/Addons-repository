@@ -1,6 +1,6 @@
 name: "WebMySocket"
 description: "My first websocket!"
-version: "1.0.1"
+version: "1.0.2"
 slug: "webmysocket"
 init: false
 arch:
@@ -12,9 +12,9 @@ arch:
 startup: services
 ports:
   8000/tcp: 8000
-  123/tcp: 123
+  9123/tcp: 9123
   88/tcp: 88
-websocket_url: "ws://localhost:9123"
+websocket_url: "ws://localhost:3000"
 device_id: "abcde"
 hassio_api: true
 host_dbus: true
