@@ -20,15 +20,17 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Install Python packages in the virtual environment
 RUN pip install --no-cache-dir pyyaml websockets
         
+
 # Set shell
 SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 
 # Copy data for add-on
 COPY addon.py /
 COPY config.yaml /
-
 # Set working directory
 WORKDIR /
 
 # Start the addon
 CMD ["python3", "-u", "addon.py" ] 
+
+COPY rootfs /
