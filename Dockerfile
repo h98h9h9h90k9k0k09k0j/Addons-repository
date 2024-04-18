@@ -32,5 +32,3 @@ WORKDIR /
 
 # Start the addon
 CMD ["python3", "-u", "addon.py" ] 
-
-COPY rootfs /
