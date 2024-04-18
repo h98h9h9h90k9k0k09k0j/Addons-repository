@@ -27,10 +27,8 @@ SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 # Copy data for add-on
 COPY addon.py /
 COPY config.yaml /
-COPY rootfs /
-
 # Set working directory
 WORKDIR /
 
 # Start the addon
-CMD ["python3", "-u", "addon.py" ] /
+CMD ["python3", "-u", "addon.py" ] 
