@@ -4,7 +4,7 @@ import typescript from '@rollup/plugin-typescript';
 export default {
   input: './src/pages/websocket-dashboard-app.ts',
   output: {
-    file: './dist/bundle.js',
+    file: './public/dist/bundle.js',
     format: 'esm',
     sourcemap: true
   },
