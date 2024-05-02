@@ -4,12 +4,13 @@ FROM alpine:3.19
 # Install Python, pip and necessary build dependencies
 RUN apk add --no-cache \
     python3 \
-    py3-pip 
-    #python3-dev \   The outcommented dependencies might become necessary depending on what we need later but idk
-    #gcc \         
-    #musl-dev  \       
-    #libffi-dev \     
-    #openssl-dev 
+    py3-pip \
+    python3-dev \ 
+    gcc \         
+    musl-dev  \       
+    libffi-dev \     
+    openssl-dev \
+    bash
 
 # Create a virtual environment in the /opt/venv directory
 RUN python3 -m venv /opt/venv
@@ -17,18 +18,21 @@ RUN python3 -m venv /opt/venv
 # Set the environment variable to ensure commands and scripts run in the virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python packages in the virtual environment
-RUN pip install --no-cache-dir pyyaml websockets
-        
-
-# Set shell
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+# Set working directory
+WORKDIR /app
 
 # Copy data for add-on
-COPY addon.py /
-COPY config.yaml /
-# Set working directory
-WORKDIR /
+COPY . /app
+
+# Install Python packages in the virtual environment
+RUN pip install --no-cache-dir -r requirements.txt
+        
+RUN chmod +x /app/run.sh
+
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+EXPOSE 3030
 
 # Start the addon
-CMD ["python3", "-u", "addon.py" ] 
+CMD ["bash", "run.sh" ] 
