@@ -1,0 +1,19 @@
+{
+    "name": "dashboard-minimal",
+    "version": "1.0.0",
+    "description": "A minimal dashboard for WebSocket communication",
+    "main": "index.js",
+    "scripts": {
+      "build": "rollup -c",
+      "develop": "rollup -c -w",
+      "setup": "npm install"
+    },
+    "dependencies": {},
+    "devDependencies": {
+      "typescript": "^4.x",
+      "rollup": "^2.x",
+      "@rollup/plugin-typescript": "^11.1.6",
+      "tslib": "^2.0.0"
+    },
+    "type": "module"
+  }

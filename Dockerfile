@@ -32,7 +32,7 @@ RUN chmod +x /app/run.sh
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-EXPOSE 3030
+EXPOSE 3030 8000
 
 # Start the addon
 CMD ["bash", "run.sh" ] 
