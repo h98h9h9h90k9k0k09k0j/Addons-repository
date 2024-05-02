@@ -4,7 +4,7 @@
     "description": "A minimal dashboard for WebSocket communication",
     "main": "index.js",
     "scripts": {
-      "build": "./scripts/build.sh",
+      "build": "rollup -c",
       "develop": "rollup -c -w",
       "setup": "npm install"
     },
