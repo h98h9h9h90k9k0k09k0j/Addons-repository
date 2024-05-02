@@ -10,10 +10,10 @@ from typing import TYPE_CHECKING, Any, Final, Optional, cast
 import uuid
 
 from aiohttp import ClientSession
-from chip.clusters import Objects as Clusters
-from chip.clusters.Types import NullValue
+from chip.clusters import Objects as Clusters #matter specific
+from chip.clusters.Types import NullValue #matter specific
 
-from matter_server.common.errors import ERROR_MAP, NodeNotExists
+from matter_server.common.errors import ERROR_MAP, NodeNotExists #matter specific
 
 from ..common.helpers.util import (
     convert_ip_address,
