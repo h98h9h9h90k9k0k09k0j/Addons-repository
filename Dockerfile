@@ -10,6 +10,8 @@ RUN apk add --no-cache \
     musl-dev  \       
     libffi-dev \     
     openssl-dev \
+    python3-opencv \
+    libopencv-dev \
     bash
 
 # Create a virtual environment in the /opt/venv directory

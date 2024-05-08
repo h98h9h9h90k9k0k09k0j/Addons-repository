@@ -2,3 +2,8 @@ pyyaml
 websockets
 asyncio
 logging
+opencv-python-headless
+cv2
+numpy
+json
+base64

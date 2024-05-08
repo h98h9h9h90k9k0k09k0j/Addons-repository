@@ -26,3 +26,4 @@ ingress_entry": "/app"
 ingress_stream: true
 options: {}
 schema: {}
+devices: ["/dev/video0:/dev/video0:rwm"]

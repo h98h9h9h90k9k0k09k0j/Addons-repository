@@ -4,7 +4,6 @@ import asyncio
 import logging
 import websockets
 from server.connection_handler import ConnectionHandler
-from server.video_capture import VideoCapture
 
 class WebSocketServer:
     def __init__(self, host='localhost', port=3030):
@@ -17,7 +16,7 @@ class WebSocketServer:
         client_id = await ConnectionHandler.register(websocket, self.clients)
         logging.info(f"New connection: {websocket.remote_address}")
         try:
-            await ConnectionHandler.manage_client(websocket, self.clients, client_id, VideoCapture)
+            await ConnectionHandler.manage_client(websocket, self.clients, client_id)
         finally:
             await ConnectionHandler.unregister(websocket, self.clients, client_id)
             logging.info(f"Connection closed: {websocket.remote_address}")
