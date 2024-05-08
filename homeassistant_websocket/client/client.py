@@ -5,7 +5,7 @@ import websockets
 import base64
 import cv2
 import numpy as np
-from client.video_processing import VideoProcessor
+from .video_processing import VideoProcessor
 
 
 class Client:

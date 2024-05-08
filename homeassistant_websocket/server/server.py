@@ -3,16 +3,17 @@
 import asyncio
 import logging
 import websockets
-from server.connection_handler import ConnectionHandler
+from .connection_handler import ConnectionHandler
 
 class WebSocketServer:
-    def __init__(self, host='localhost', port=3030):
+    def __init__(self, host="0.0.0.0", port=3030):
         self.host = host
         self.port = port
         self.clients = {}  # Dictionary to manage connections
         logging.basicConfig(level=logging.INFO)
 
-    async def handler(self, websocket, path):
+    async def handler(self, websocket):
+        logging.info(f"Client attempting to connect from {websocket.remote_address}")
         client_id = await ConnectionHandler.register(websocket, self.clients)
         logging.info(f"New connection: {websocket.remote_address}")
         try:
@@ -21,7 +22,7 @@ class WebSocketServer:
             await ConnectionHandler.unregister(websocket, self.clients, client_id)
             logging.info(f"Connection closed: {websocket.remote_address}")
 
-    async def run(self):
+    def run(self):
         start_server = websockets.serve(self.handler, self.host, self.port)
         asyncio.get_event_loop().run_until_complete(start_server)
         logging.info(f"Server started at ws://{self.host}:{self.port}")
