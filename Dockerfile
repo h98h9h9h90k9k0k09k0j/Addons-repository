@@ -6,19 +6,17 @@ RUN apk add --no-cache \
     python3 \
     py3-pip \
     python3-dev \ 
-    gcc \         
+    gcc \       
+    g++ \  
     musl-dev  \       
-    libffi-dev \     
+    libffi-dev \    
+    openblas-dev \  
+    lapack-dev \    
+    cmake \          
     openssl-dev \
-    python3-opencv \
-    libopencv-dev \
+    # alpine package for opencv
+    opencv-dev  \ 
     bash
-
-# Create a virtual environment in the /opt/venv directory
-RUN python3 -m venv /opt/venv
-
-# Set the environment variable to ensure commands and scripts run in the virtual environment
-ENV PATH="/opt/venv/bin:$PATH"
 
 # Set working directory
 WORKDIR /app
@@ -26,8 +24,16 @@ WORKDIR /app
 # Copy data for add-on
 COPY . /app
 
+# Create a virtual environment in the /opt/venv directory
+RUN python3 -m venv /opt/venv \
+    && source /opt/venv/bin/activate 
+
+# Set the environment variable to ensure commands and scripts run in the virtual environment
+ENV PATH="/opt/venv/bin:$PATH"
+
 # Install Python packages in the virtual environment
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip \
+&& pip install --no-cache-dir -r requirements.txt
         
 RUN chmod +x /app/run.sh
 
