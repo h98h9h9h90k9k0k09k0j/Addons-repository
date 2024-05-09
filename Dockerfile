@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libopencv-dev \
     python3.11-venv \
     git \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -18,6 +19,9 @@ WORKDIR /app
 
 # Copy data for add-on
 COPY . /app
+
+# Convert any scripts that might have Windows line endings to Unix line endings
+RUN dos2unix /app/run.sh
 
 # Create a virtual environment in the /opt/venv directory
 RUN python3 -m venv /opt/venv \

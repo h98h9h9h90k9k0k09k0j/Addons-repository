@@ -78,11 +78,10 @@ class Client:
 
     async def start_listening(self, websocket):
         try:
-            self.ping(websocket)
+            logging.info(f"Client {self.client_id} is now listening to the server.")
+            await self.ping(websocket)
             await self.update_status(websocket)
             response = await websocket.recv()
-            print(f"< Response from server: {response}")  # Pong
-
             if response.startswith("CMD"):  # Check response start string
                 command = response.split(" ", 1)[1]  # Extract the command
                 print("Received a command processing request.")
@@ -106,7 +105,17 @@ class Client:
             logging.error(f"Error occurred during the communication with server: {e}")
     
     async def connect(self):
+        logging.info(f"Client {self.client_id} trying to connect to the server.")
         async with websockets.connect(self.uri) as websocket:
+            response = await websocket.recv()
+            message = json.loads(response)
+            logging.info(f"< Response from server: {message}")  # Pong
+
+            logging.info(f"Client {self.client_id} trying to specify client type to the server.")
+            await websocket.send(json.dumps({"client_type":"camera_client"}))
+            response = await websocket.recv()
+            message = json.loads(response)
+            logging.info(f"< Response from server: {message}")  # Pong
             try:
                 while True:
                     await self.start_listening(websocket)
@@ -115,12 +124,16 @@ class Client:
             finally:
                 await websocket.close()
 
-    async def ping(websocket, ping_pong_interval_sec=10, message="keep going"):
+    def run(self):
+        asyncio.get_event_loop().run_until_complete(self.connect())
+        asyncio.get_event_loop().run_forever()
+
+    async def ping(self, websocket, ping_pong_interval_sec=10):
         try:
-            await websocket.send(message)
+            await websocket.send(json.dumps({"message": "ping"}))
             response = await websocket.recv()
-            print(f"< Response from the server: {response}")
-            await asyncio.sleep(ping_pong_interval_sec)
+            logging.info(f"< Response from the server: {response}")
+            # await asyncio.sleep(ping_pong_interval_sec)
         except Exception as e:
             logging.error(f"Error occurred during ping-pong: {e}")
 
