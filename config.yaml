@@ -14,12 +14,16 @@ ports:
   8000/tcp: 8000
   9123/tcp: 9123
   3030/tcp: 3030
-websocket_url: "ws://localhost:3000"
+#websocket_url: "ws://localhost:3000"
 device_id: "abcde"
 hassio_api: true
 host_dbus: true
-host_network: true
+host_network: false
 # Hvis ingress er nødvendigt
 ingress: true
 ingress_port: 3030
+ingress_entry": "/app"
 ingress_stream: true
+options: {}
+schema: {}
+devices: ["/dev/video0:/dev/video0:rwm"]

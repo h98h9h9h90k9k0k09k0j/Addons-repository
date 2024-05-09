@@ -1,34 +1,47 @@
-# Downloaded from https://github.com/home-assistant/docker-base example: ghcr.io/home-assistant/amd64-base which is alpine:3.19 https://hub.docker.com/layers/amd64/alpine/3.19/images/sha256-6457d53fb065d6f250e1504b9bc42d5b6c65941d57532c072d929dd0628977d0?context=explore
-FROM alpine:3.19
+# Home Assistant Debian base image
+FROM ghcr.io/home-assistant/amd64-base-debian:bookworm
 
-# Install Python, pip and necessary build dependencies
-RUN apk add --no-cache \
+# Install Python and necessary build dependencies
+RUN apt-get update && apt-get install -y \
     python3 \
-    py3-pip 
-    #python3-dev \   The outcommented dependencies might become necessary depending on what we need later but idk
-    #gcc \         
-    #musl-dev  \       
-    #libffi-dev \     
-    #openssl-dev 
+    python3-pip \
+    python3-dev \
+    libffi-dev \
+    libssl-dev \
+    libopencv-dev \
+    python3.11-venv \
+    git \
+    dos2unix \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy data for add-on
+COPY . /app
+
+# Convert any scripts that might have Windows line endings to Unix line endings
+RUN dos2unix /app/run.sh
 
 # Create a virtual environment in the /opt/venv directory
-RUN python3 -m venv /opt/venv
+RUN python3 -m venv /opt/venv \
+    && . /opt/venv/bin/activate 
 
 # Set the environment variable to ensure commands and scripts run in the virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Python packages in the virtual environment
-RUN pip install --no-cache-dir pyyaml websockets
-        
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Set shell
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+# Ensure the main script is executable
+RUN chmod +x /app/run.sh
 
-# Copy data for add-on
-COPY addon.py /
-COPY config.yaml /
-# Set working directory
-WORKDIR /
+# Use bash for running commands
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Start the addon
-CMD ["python3", "-u", "addon.py" ] 
+# Expose necessary ports
+EXPOSE 3030 8000
+
+# Command to run the Home Assistant add-on
+CMD ["bash", "run.sh"]

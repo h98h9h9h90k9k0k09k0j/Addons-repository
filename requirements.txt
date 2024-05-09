@@ -1,2 +1,7 @@
 pyyaml
 websockets
+numpy
+opencv-python-headless
+deepface
+tf_keras
+psutil
