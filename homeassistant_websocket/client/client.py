@@ -62,9 +62,11 @@ class Client:
                 VideoProcessor.motion_detection(frame)
             elif command == 'detect_motion':
                 if VideoProcessor.motion_detected is True:
-                    message = "Motion detected"
+                    message = 'Motion detected'
                     return message
                     # await self.video_forwarded(websocket)
+            elif command == 'emotion':
+                VideoProcessor.emotion_recognition(frame)
             else:
                 VideoProcessor.process_video(frame)
             # Add more options as needed
@@ -149,8 +151,8 @@ class Client:
 
 # Overvej Executor til at wrap video processoren i en stand alone thread.
 
-# Command list: Handshake, camera settings, data transfer, request/response, 
-# Load balancing, error handling, ping/pong, status update, program updates, shutdown/restart.
+# Command list: H̶a̶n̶d̶s̶h̶a̶k̶e̶, camera settings, data transfer, request/response, 
+# Load balancing, e̶r̶r̶o̶r̶ h̶a̶n̶d̶l̶i̶n̶g̶, p̶i̶n̶g̶/̶p̶o̶n̶g̶, s̶t̶a̶t̶u̶s̶ u̶p̶d̶a̶t̶e̶, program updates, shutdown/restart.
 
 #Client Class indeholder:
 """  O = first edition done  X = need further details before implementation  ? = unsure if needed
