@@ -1,6 +1,6 @@
 import asyncio
 import json
-from server.video_capture import VideoHandler
+from .video_capture import VideoHandler
 import cv2
 from concurrent.futures import ThreadPoolExecutor
 import logging

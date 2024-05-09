@@ -7,8 +7,8 @@ import base64
 import cv2
 import numpy as np
 import psutil
-from client.video_processing import VideoProcessor
 from datetime import datetime
+from .video_processing import VideoProcessor
 
 
 class Client:
