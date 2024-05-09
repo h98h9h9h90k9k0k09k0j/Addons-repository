@@ -2,3 +2,4 @@ pyyaml
 websockets
 numpy
 opencv-python-headless
+psutil

@@ -4,7 +4,7 @@ import sys
 from homeassistant_websocket.server.__main__ import main as server_main
 from homeassistant_websocket.client.__main__ import main as client_main
 
-run_type = "server"
+run_type = "client"
 
 # The user should configure in the options file whether the script should run as a server or client
 def run():
