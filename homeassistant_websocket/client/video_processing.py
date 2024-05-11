@@ -1,8 +1,10 @@
-import cv2
-import numpy as np
-from deepface import DeepFace
-from PIL import Image
 import os
+import cv2
+import time
+import datetime
+import numpy as np
+from PIL import Image
+from deepface import DeepFace
 # Does processing on the received video data
 # Should respond to the server depending on the type of processing
 
@@ -13,8 +15,11 @@ class VideoProcessor:
         pass
 
     @staticmethod
-    async def camera_adj(video_source):
-        pass
+    async def change_camera_settings(video_source, width, height, framerate):
+        cam = cv2.VideoCapture(video_source)
+        cam.set(3, int(width))
+        cam.set(4, int(height))
+        cam.set(cv2.CAP_PROP_FPS, framerate)
 
     def face_training():
         # Path for face image database
@@ -154,30 +159,49 @@ class VideoProcessor:
     async def motion_detection(video_source, message, websocket, clients):
         cap = cv2.VideoCapture(video_source)
 
+        path = "img_motion_det" #  Please, Check if path is created inside client folder
+        os.makedirs(path, exist_ok=True)
+
         if not cap.isOpened():
             print("Error: Unable to open video source")
             return
         
         fgbg = cv2.createBackgroundSubtractorMOG2() #fgbg = foreground/background
+        count = 0
+
         while True:
             ret, frame = cap.read()
+            date_time = str(datetime.datetime.now())
 
             if not ret:
                 break
             fgmask = fgbg.apply(frame) # apply background subtraction -> foreground mask image
             _, th = cv2.threshold(fgmask, 200, 255, cv2.THRESH_BINARY[1]) #colors above 200 turns white. [1] = thresholded image
             contours, hierarchy = cv2. findContours(th, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #RETR_EXTERNAL = external contours, CHAIN... = compress to save memory
+            
+            motion_detected = False
+            
             for contour in contours:
                 area = cv2.contourArea(contour)
                 if area > 100:
                     x, y, w, h = cv2.boundingRect(contour)
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) #rectangle drawn around object if area is big enough
+                    motion_detected = True
+            if motion_detected and count < 10:
+                image_path = os.path.join(path, f"frame_{date_time}_{count}.jpg")
+                cv2.imwrite(image_path, frame)
+                count += 1
+            else:
+                count = 0
+                time.sleep(3)  # HEAVY ON THE CAMERA RENDERING!!!
+            cv2.putText(frame, date_time, (10, 20), cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2, cv2.LINE_AA)
             cv2.imshow('frame', frame) #display frame
-
             if cv2.waitKey(1) & 0xFF == ord('q'): 
                 break #break loop with 'q'
         cap.release()
         cv2.destroyAllWindows()
+    #  all time running detection
+    #  detection data storage = frames (måske 10), snapshots (måske 10), timestamp. Basically et file dump. 
 
     @staticmethod
     async def motion_detected(video_source):

@@ -7,8 +7,11 @@ import base64
 import cv2
 import numpy as np
 import psutil
+import os
+import aiofiles
 from datetime import datetime
 from .video_processing import VideoProcessor
+from concurrent.futures import ThreadPoolExecutor
 
 
 class Client:
@@ -53,24 +56,61 @@ class Client:
     async def update_status(self, websocket):
         self.status = await self.get_cpu_usage()
         if self.status > 80:
-            await websocket.send(f"Caution! Client {self.client_id} working at {self.status}%")
+            await websocket.send(f"Caution! Client {self.client_id} CPU is working at {self.status}%")
+
+    async def send_frames_to_server(self, websocket):
+        self.img_folder = "img_motion_det"
+        try:
+            for filename in os.listdir(self.img_folder):
+                if filename.endswith(".jpg"):
+                    image_path = os.path.join(self.img_folder, filename)
+                    async with aiofiles.open(image_path, mode="rb") as f:
+                        image_data = await f.read()
+                    encoded_image = base64.b64encode(image_data).decode("utf-8") # skal måske ikke bruges
+                    await websocket.send(encoded_image) # Overvej om det er json.dump vi skal bruge
+                    print(f"Sent {filename} to the server.")
+                    os.remove(image_path)  # Delete the sent image. Image no longer occupies space. Do we wanna save this?
+            print("All frames sent to the server.")
+        except Exception as e:
+            logging.error(f"Error occurred while sending frames to the server: {e}")
+
+    def delete_frames(self):
+        try:
+            for filename in os.listdir(self.img_folder):
+                if filename.endswith(".jpg"):
+                    image_path = os.path.join(self.img_folder, filename)
+                    os.remove(image_path)
+                    print(f"Deleted {filename}.")
+            print("All frames deleted.")
+        except Exception as e:
+            logging.error(f"Error occurred while deleting frames: {e}")
 
     async def process(self, frame, command, message):
+        executor = ThreadPoolExecutor(max_workers=1)
+        capture_task = None
         try: 
             # Process the frame according to the command
             if command == 'motion_detection':
-                VideoProcessor.motion_detection(frame)
+                if capture_task is not None and not capture_task.done():
+                    logging.info("Video capture is already running")
+                capture_task = asyncio.ensure_future(asyncio.get_event_loop().run_in_executor(executor, VideoProcessor.motion_detection(frame)))
+                message = 'Motion detected. Do you want to send the frames to the server? (yes/no)'
+                return message
             elif command == 'detect_motion':
-                if VideoProcessor.motion_detected is True:
+                if await VideoProcessor.motion_detected(frame):
                     message = 'Motion detected'
                     return message
                     # await self.video_forwarded(websocket)
             elif command == 'emotion':
+                if capture_task is not None and not capture_task.done():
+                    logging.info("Video capture is already running")
                 VideoProcessor.emotion_recognition(frame)
+                capture_task = asyncio.ensure_future(asyncio.get_event_loop().run_in_executor(executor, VideoProcessor.emotion_recognition(frame)))
             else:
                 VideoProcessor.process_video(frame)
             # Add more options as needed
 
+            executor.shutdown(wait=True)
             return None  # Return the result of the processing
         except Exception as e:
             logging.error(f"Error occurred during processing: {e}")
@@ -92,15 +132,24 @@ class Client:
                 frame = cv2.imdecode(np_data, flags=1)
 
                 # Process the frame
-                result = await self.process(frame, command)
+                result = await self.process(frame, command) #Hvor kommer command fra? lige nu kan command undgås i linje 125
                 print("Frame has been processed.")
 
                 if result:
                     print("Sending success message to server...")
                     await websocket.send(f"RESULT{self.client_id}: Success => {result}")
+                    response = input("Do you wish to retrieve the images? (yes/no): ").lower()
+                    if response == "yes":
+                        print("Sending frames to the server...")
+                        await self.send_frames_to_server(websocket)
+                    else:
+                        print("Frames will not be sent to the server. Deleting frames...")
+                        self.delete_frames()
                 else:
                     print("Sending failure message to server...")
                     await websocket.send(f"RESULT{self.client_id}: Fail => {result}")
+        except websockets.exceptions.ConnectionClosedError as e:
+            logging.error(f"Connection to server closed unexpectedly: {e}")
         except Exception as e:
             logging.error(f"Error occurred during the communication with server: {e}")
     
@@ -149,9 +198,10 @@ class Client:
 
 # E̶t̶a̶b̶l̶e̶r̶ p̶i̶n̶g̶ c̶o̶n̶n̶e̶c̶t̶i̶o̶n̶ + d̶e̶t̶e̶c̶t̶ m̶o̶t̶i̶o̶n̶ p̶l̶a̶c̶e̶h̶o̶l̶d̶e̶r̶
 
-# Overvej Executor til at wrap video processoren i en stand alone thread.
+# Overvej Executor til at wrap video processoren i en stand alone thread. Threading or await?
+# Refactor structure
 
-# Command list: H̶a̶n̶d̶s̶h̶a̶k̶e̶, camera settings, data transfer, request/response, 
+# Command list: H̶a̶n̶d̶s̶h̶a̶k̶e̶, c̶a̶m̶e̶r̶a̶ s̶e̶t̶t̶i̶n̶g̶s̶, data transfer, request/response, 
 # Load balancing, e̶r̶r̶o̶r̶ h̶a̶n̶d̶l̶i̶n̶g̶, p̶i̶n̶g̶/̶p̶o̶n̶g̶, s̶t̶a̶t̶u̶s̶ u̶p̶d̶a̶t̶e̶, program updates, shutdown/restart.
 
 #Client Class indeholder:
