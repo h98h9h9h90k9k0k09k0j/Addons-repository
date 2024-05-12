@@ -1,0 +1,4 @@
+# https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
+name: Repositrory for distributing tasks in home assistant
+url: 'https://github.com/h98h9h9h90k9k0k09k0j/Websocket-Addon'
+maintainer: P6-15 <awesome@example.com>
