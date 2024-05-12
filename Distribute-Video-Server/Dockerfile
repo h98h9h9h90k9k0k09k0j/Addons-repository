@@ -1,6 +1,5 @@
-#ARG BUILD_FROM
-#FROM $BUILD_FROM
-FROM aleksanderrdl/hass-distribute-addon:server_amd64
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
 # copy run file
 COPY run.sh /app
