@@ -23,4 +23,4 @@ ingress_entry: "/app"
 ingress_stream: true
 # device_id: "abcde"
 devices: 
-  - /dev/video0
+  - /dev/video0:rwm
