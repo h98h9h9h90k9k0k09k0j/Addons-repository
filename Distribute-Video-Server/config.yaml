@@ -1,6 +1,6 @@
 name: "Distribute video"
 description: "My first websocket!"
-version: "1.0.2"
+version: "1.0.4"
 slug: "distribute-video"
 init: false
 arch:
@@ -21,6 +21,7 @@ ingress: true
 ingress_port: 3030
 ingress_entry: "/app"
 ingress_stream: true
+full_access: true
 # device_id: "abcde"
-devices: 
-  - /dev/video0:rwm
+#devices: 
+#  - /dev/video0:rwm
