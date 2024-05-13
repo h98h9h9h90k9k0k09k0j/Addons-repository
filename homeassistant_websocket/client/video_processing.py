@@ -48,7 +48,7 @@ class VideoProcessor:
         # Save the model into trainer/trainer.yml
         recognizer.write('trainer/trainer.yml')
         # Print the numer of faces trained and end program
-        print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))
+        print("\n [INFO] {0} faces trained. Exiting 2/3 Program".format(len(np.unique(ids))))
 
     def face_recognition(name, video_source):
         recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -121,12 +121,18 @@ class VideoProcessor:
         # Make sure to enable camera
        # https://towardsdatascience.com/real-time-face-recognition-an-end-to-end-project-b738bb0f7348
 
+        path = "dataset" #  Please, Check if path is created inside client folder
+        os.makedirs(path, exist_ok=True)
+
+        path = "trainer" #  Please, Check if path is created inside client folder
+        os.makedirs(path, exist_ok=True)
+
         cam = cv2.VideoCapture(video_source)
         cam.set(3, 640) # set video width
         cam.set(4, 480) # set video height
         face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         # For each person, enter one numeric face id
-        face_id = input('\n enter user id end press <return> ==>  ')
+        face_id = input('\n enter user id and name end press <return> ==>  ')  # SKAL OVER PÅ FRONTEND!
         id_str, name = face_id.split()
         id = int(id_str)
         print("\n [INFO] Initializing face capture. Look the camera and wait ...")
@@ -185,7 +191,13 @@ class VideoProcessor:
                 area = cv2.contourArea(contour)
                 if area > 100:
                     x, y, w, h = cv2.boundingRect(contour)
-                    cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) #rectangle drawn around object if area is big enough
+                    cv2.rectangle(
+                        frame, 
+                        (x, y), 
+                        (x+w, y+h), 
+                        (0, 255, 0), 
+                        2
+                    ) #rectangle drawn around object if area is big enough
                     motion_detected = True
             if motion_detected and count < 10:
                 image_path = os.path.join(path, f"frame_{date_time}_{count}.jpg")
@@ -193,8 +205,17 @@ class VideoProcessor:
                 count += 1
             else:
                 count = 0
-                time.sleep(3)  # HEAVY ON THE CAMERA RENDERING!!!
-            cv2.putText(frame, date_time, (10, 20), cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2, cv2.LINE_AA)
+                time.sleep(3)  # HEAVY ON THE CAMERA RENDERING!!! Consider multithreading or asyncio
+            cv2.putText(
+                frame, 
+                date_time, 
+                (10, 20), 
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1,
+                (0,0,255),
+                2, 
+                cv2.LINE_AA
+            )
             cv2.imshow('frame', frame) #display frame
             if cv2.waitKey(1) & 0xFF == ord('q'): 
                 break #break loop with 'q'
@@ -263,8 +284,22 @@ class VideoProcessor:
                 emotion = result[0]['dominant_emotion']
 
                 # Draw rectangle around face and label with predicted emotion
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+                cv2.rectangle(
+                    frame, 
+                    (x, y), 
+                    (x + w, y + h), 
+                    (0, 0, 255), 
+                    2
+                )
+                cv2.putText(
+                    frame, 
+                    emotion, 
+                    (x, y - 10), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 
+                    0.9, 
+                    (0, 0, 255), 
+                    2
+                )
                 message = f'Emotion "{emotion}" detected'
                 return message
             # Display the resulting frame

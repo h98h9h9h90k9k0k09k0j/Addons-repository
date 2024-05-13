@@ -9,6 +9,7 @@ import numpy as np
 import psutil
 import os
 import aiofiles
+import time
 from datetime import datetime
 from .video_processing import VideoProcessor
 from concurrent.futures import ThreadPoolExecutor
@@ -18,7 +19,6 @@ class Client:
     def __init__(self, client_id: int, uri: str):
         self.uri = uri
         self.client_id = client_id
-        self.status = 0
 
     """ abstraction
     async def send_message(websocket, message):
@@ -50,13 +50,46 @@ class Client:
             logging.error(f"Error occurred during livestream forwarding: {e}")
     """
     async def get_cpu_usage(self):
-        cpu_usage = psutil.cpu_percent()
-        return cpu_usage
-    
+        return psutil.cpu_percent()
+        
+    async def get_cpu_load_avg(self):
+        return psutil.getloadavg()[0]
+
+    async def get_cpu_vmem(self):
+        return psutil.virtual_memory().percent
+
     async def update_status(self, websocket):
-        self.status = await self.get_cpu_usage()
-        if self.status > 80:
-            await websocket.send(f"Caution! Client {self.client_id} CPU is working at {self.status}%")
+        threshold_pct = 70
+        duration_seconds = 20
+        metric_functions = {
+            "load": get_cpu_load_avg,
+            "vmem_pct": get_cpu_vmem,
+            "cpu_usage": get_cpu_usage
+        }
+        while True:
+            surpassing_metric = None
+            for metric, func in metric_functions.items(): 
+                metric_value = await func()
+                if metric_value > threshold_pct:
+                    surpassing_metric = metric
+                    break
+
+            if surpassing_metric:
+                start_time = asyncio.get_event_loop().time()
+
+                while True:
+                    usage_pct = await metric_functions[surpassing_metric]()
+
+                    if usage_pct <= threshold_pct:
+                        break
+
+                    if asyncio.get_event_loop().time() - start_time >= duration_seconds:
+                        await websocket.send(f"Caution! Client {self.client_id} {surpassing_metric} is working at {usage_pct}%!")
+                        break
+
+                    asyncio.sleep(1)
+
+            asyncio.sleep(10)
 
     async def send_frames_to_server(self, websocket):
         self.img_folder = "img_motion_det"
@@ -194,14 +227,14 @@ class Client:
             logging.error(f"Error occurred while retrieving remote IP address: {e}")
             return None
 
-# Task list: 1) G̶e̶n̶n̶e̶m̶g̶a̶n̶g̶.̶ 2) Logik til framehandling + tags/homegrown "metadata" fra videofeed til server. 3) L̶a̶v̶ e̶n̶ c̶o̶m̶m̶a̶n̶d̶ l̶i̶s̶t̶ + m̶a̶n̶a̶g̶e̶m̶e̶n̶t̶.̶ 4) L̶o̶g̶g̶i̶n̶g̶.
+# Task list: 1) G̶e̶n̶n̶e̶m̶g̶a̶n̶g̶.̶ 2) L̶o̶g̶i̶k̶ t̶i̶l̶ f̶r̶a̶m̶e̶h̶a̶n̶d̶l̶i̶n̶g̶ +̶ t̶a̶g̶s̶/̶h̶o̶m̶e̶g̶r̶o̶w̶n̶ "̶m̶e̶t̶a̶d̶a̶t̶a̶"̶ f̶r̶a̶ v̶i̶d̶e̶o̶f̶e̶e̶d̶ t̶i̶l̶ s̶e̶r̶v̶e̶r̶. 3) L̶a̶v̶ e̶n̶ c̶o̶m̶m̶a̶n̶d̶ l̶i̶s̶t̶ + m̶a̶n̶a̶g̶e̶m̶e̶n̶t̶.̶ 4) L̶o̶g̶g̶i̶n̶g̶.
 
 # E̶t̶a̶b̶l̶e̶r̶ p̶i̶n̶g̶ c̶o̶n̶n̶e̶c̶t̶i̶o̶n̶ + d̶e̶t̶e̶c̶t̶ m̶o̶t̶i̶o̶n̶ p̶l̶a̶c̶e̶h̶o̶l̶d̶e̶r̶
 
 # Overvej Executor til at wrap video processoren i en stand alone thread. Threading or await?
 # Refactor structure
 
-# Command list: H̶a̶n̶d̶s̶h̶a̶k̶e̶, c̶a̶m̶e̶r̶a̶ s̶e̶t̶t̶i̶n̶g̶s̶, data transfer, request/response, 
+# Command list: H̶a̶n̶d̶s̶h̶a̶k̶e̶, c̶a̶m̶e̶r̶a̶ s̶e̶t̶t̶i̶n̶g̶s̶, d̶a̶t̶a̶ t̶r̶a̶n̶s̶f̶e̶r̶, request/response, 
 # Load balancing, e̶r̶r̶o̶r̶ h̶a̶n̶d̶l̶i̶n̶g̶, p̶i̶n̶g̶/̶p̶o̶n̶g̶, s̶t̶a̶t̶u̶s̶ u̶p̶d̶a̶t̶e̶, program updates, shutdown/restart.
 
 #Client Class indeholder:
