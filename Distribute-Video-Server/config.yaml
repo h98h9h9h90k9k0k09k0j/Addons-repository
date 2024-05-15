@@ -22,6 +22,7 @@ ingress_port: 3030
 ingress_entry: "/app"
 ingress_stream: true
 full_access: true
+video: true
 # device_id: "abcde"
 #devices: 
 # - /dev/video0
