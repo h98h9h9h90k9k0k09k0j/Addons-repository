@@ -1,7 +1,7 @@
-name: "Distribute video"
-description: "My first websocket!"
-version: "1.0.6"
-slug: "distribute-video"
+name: "Distribute Test"
+description: "GStreamer test server for video distribution"
+version: "1.0.0"
+slug: "distribute-test"
 init: false
 arch:
   - aarch64
