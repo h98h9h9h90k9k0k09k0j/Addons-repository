@@ -1,6 +1,6 @@
 name: "Distribute video"
 description: "My first websocket!"
-version: "1.0.4"
+version: "1.0.6"
 slug: "distribute-video"
 init: false
 arch:
