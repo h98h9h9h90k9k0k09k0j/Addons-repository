@@ -31,5 +31,7 @@ map:
   - share:rw
 # device_id: "abcde"
 devices: 
- - /dev/video0
- - /dev/video1
+ - /dev/video0:/dev/video0
+ - /dev/video1:/dev/video1
+apparmor: false
+uart: true
