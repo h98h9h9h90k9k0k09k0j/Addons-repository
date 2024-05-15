@@ -21,8 +21,15 @@ ingress: true
 ingress_port: 3030
 ingress_entry: "/app"
 ingress_stream: true
-full_access: true
 video: true
+usb: true
+privileged:
+  - DAC_READ_SEARCH
+  - SYS_ADMIN
+map:
+  - media:rw
+  - share:rw
 # device_id: "abcde"
-#devices: 
-# - /dev/video0
+devices: 
+ - /dev/video0
+ - /dev/video1
