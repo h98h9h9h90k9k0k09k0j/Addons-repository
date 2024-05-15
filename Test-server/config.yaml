@@ -1,6 +1,6 @@
 name: "Distribute Test"
 description: "GStreamer test server for video distribution"
-version: "1.0.0"
+version: "1.0.2"
 slug: "distribute-test"
 init: false
 arch:
