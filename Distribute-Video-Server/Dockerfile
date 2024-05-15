@@ -8,8 +8,7 @@ RUN \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
 
 # copy run file
-COPY run.sh /app
-COPY config.yaml /app
+COPY . /app
 
 # Convert any scripts that might have Windows line endings to Unix line endings
 RUN dos2unix /app/run.sh
