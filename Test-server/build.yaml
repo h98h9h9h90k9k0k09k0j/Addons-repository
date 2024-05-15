@@ -1,5 +1,5 @@
 build_from:
-  aarch64: "aleksanderrdl/hass-distribute-addon:server_alpine_aarch64"
+  aarch64: "aleksanderrdl/hass-distribute-addon:server_debian_aarch64"
   amd64: "aleksanderrdl/hass-distribute-addon:server_amd64"
 
 

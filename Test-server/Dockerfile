@@ -1,13 +1,16 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-#FROM aleksanderrdl/hass-distribute-addon:server_alpine_aarch64
+#FROM aleksanderrdl/hass-distribute-addon:server_debian_aarch64
 
 # Execute during the build of the image
 ARG TEMPIO_VERSION BUILD_ARCH
 RUN \
     curl -sSLf -o /usr/bin/tempio \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
+
+RUN apt-get update && apt-get install -y \
+    ffmpeg
 
 # copy run file
 COPY . /app
