@@ -10,4 +10,5 @@ rtspAddress: :8554
 
 
 paths:
+  all:
     source: rtsp://localhost:8554/mystream
