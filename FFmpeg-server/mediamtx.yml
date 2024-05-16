@@ -10,7 +10,7 @@ rtspAddress: :8554
 
 
 paths:
-  all:
+  mystream:
     source: rtsp://localhost:8554/mystream
     sourceOnDemand: yes
     source: publisher
