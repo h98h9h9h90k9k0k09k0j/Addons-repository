@@ -1,13 +1,8 @@
 #!/bin/bash
 #set -e
 
-# Activate the virtual environment
-source /opt/venv/bin/activate
-echo "activated virtual enviroment"
-
-
 # Start MediaMTX
-mediamtx /app/mediamtx.yml &
+/usr/local/bin/mediamtx /app/mediamtx.yml &
 
 # Wait for the RTSP server to start
 sleep 5
@@ -19,7 +14,9 @@ ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f rtsp rtsp://localhost:8
 
 #ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f rtp rtp://localhost:1234
 
-
+# Activate the virtual environment
+source /opt/venv/bin/activate
+echo "activated virtual enviroment"
 
 # Start the WebSocket server in the background
 python3 /app/websocket_entry.py &
