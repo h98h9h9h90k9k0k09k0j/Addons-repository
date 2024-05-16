@@ -6,9 +6,9 @@ source /opt/venv/bin/activate
 echo "activated virtual enviroment"
 
 # Start FFmpeg for streaming
-ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f flv rtmp://localhost/live/stream &
+#ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f flv rtmp://localhost/live/stream &
 
-#ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f rtsp rtsp://localhost:8554/mystream
+ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f rtsp rtsp://localhost:8554/mystream &
 
 #ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f rtp rtp://localhost:1234
 
