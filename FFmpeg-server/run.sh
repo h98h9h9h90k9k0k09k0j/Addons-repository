@@ -2,7 +2,7 @@
 #set -e
 
 # Start MediaMTX
-/usr/local/bin/mediamtx /app/mediamtx.yml &
+mediamtx /app/mediamtx.yml &
 
 # Wait for the RTSP server to start
 sleep 5
