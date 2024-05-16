@@ -13,3 +13,4 @@ paths:
   all:
     source: rtsp://localhost:8554/mystream
     sourceOnDemand: yes
+    source: publisher
