@@ -25,12 +25,3 @@ paths:
   all:
     # source is an RTSP server
     source: rtsp://localhost:8554/mystream
-
-    # source protocol
-    sourceProtocol: automatic
-
-    # source transport
-    sourceTransport: automatic
-
-    # source fingerprint
-    sourceFingerprint: ""
