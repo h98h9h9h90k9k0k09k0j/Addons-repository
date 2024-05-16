@@ -1,0 +1,3 @@
+# MediaMTX configuration
+rtsp:
+  address: 8554

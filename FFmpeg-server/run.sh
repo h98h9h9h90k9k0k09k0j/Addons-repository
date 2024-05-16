@@ -5,6 +5,13 @@
 source /opt/venv/bin/activate
 echo "activated virtual enviroment"
 
+
+# Start MediaMTX
+mediamtx /app/mediamtx.yml &
+
+# Wait for the RTSP server to start
+sleep 5
+
 # Start FFmpeg for streaming
 #ffmpeg -f video4linux2 -i /dev/video0 -vcodec libx264 -f flv rtmp://localhost/live/stream &
 
