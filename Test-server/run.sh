@@ -26,7 +26,7 @@ echo "activated virtual enviroment"
 #GST_DEBUG=4 gst-launch-1.0 v4l2src device=/dev/video0 ! image/jpeg,framerate=30/1 ! jpegdec ! videoconvert ! x264enc ! rtph264pay config-interval=1 ! gdppay ! tcpserversink host=0.0.0.0 port=8080
 
 # test on local
-gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! x264enc ! mp4mux ! filesink location=/config/capture.mp4
+gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! x264enc ! mp4mux ! filesink location=/addon_configs/capture.mp4
 
 
 # Start the WebSocket server in the background
