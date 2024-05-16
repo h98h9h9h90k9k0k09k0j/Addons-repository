@@ -1,27 +1,13 @@
 # MediaMTX configuration
 logLevel: info
 
-rtsp:
-  # enable the TCP transport protocol
-  protocols: [tcp]
+rtsp: yes
+# enable the TCP transport protocol
+protocols: [tcp]
+encryption: "no"
+# Address of the TCP/RTSP listener. This is needed only when encryption is "no" or "optional".
+rtspAddress: :8554
 
-  # listen for incoming connections on the specified address
-  listen: :8554
-
-  # override the NAT IP address that is announced to clients
-  # (useful only if you are behind a NAT)
-  #natIp: 1.2.3.4
-
-  # read timeout
-  readTimeout: 10s
-
-  # write timeout
-  writeTimeout: 10s
-
-  # enable the RTSP authentication
-  #authMethods: [basic]
 
 paths:
-  all:
-    # source is an RTSP server
     source: rtsp://localhost:8554/mystream
