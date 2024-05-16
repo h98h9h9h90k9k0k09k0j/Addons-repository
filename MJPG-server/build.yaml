@@ -1,0 +1,7 @@
+build_from:
+  aarch64: "aleksanderrdl/hass-distribute-addon:server_debian_aarch64"
+  amd64: "aleksanderrdl/hass-distribute-addon:server_amd64"
+
+
+args:
+  TEMPIO_VERSION: "2021.09.0"

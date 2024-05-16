@@ -1,7 +1,7 @@
-name: "Distribute Test"
+name: "GStreamer-server"
 description: "GStreamer test server for video distribution"
 version: "1.0.2"
-slug: "distribute-test"
+slug: "GStreamer-server"
 init: false
 arch:
   - aarch64
