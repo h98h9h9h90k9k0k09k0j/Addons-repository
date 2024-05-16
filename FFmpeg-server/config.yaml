@@ -1,7 +1,7 @@
-name: "FFmpeg TEST Server"
-description: "Server for testing serving with FFmpeg"
+name: "ffmpeg TEST Server"
+description: "Server for testing serving with ffmpeg"
 version: "1.0.2"
-slug: "FFmpeg-server"
+slug: "ffmpeg-server"
 init: false
 arch:
   - aarch64
