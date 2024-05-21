@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../scripts/page_switcher.js"></script>
+</head>
+<body>
+    <h1>Server Page</h1>
+    <button class="button" type="button">Server</button>
+    <button class="button" type="button" onclick="navigateTo('clients.html')">Clients</button>
+    <button class="button" type="button" onclick="navigateTo('video.html')">Video</button>
+    <button class="button" type="button" onclick="navigateTo('stats.html')">Stats</button>
+
+    <div class="header"></div>
+
+    <div class="container">
+        <div class="box sidebar">
+            <button class="button" type="button" onclick="start_server();">Start Server</button>
+            <button class="button" type="button" onclick="stop_server();">Stop Server</button>
+        </div>
+
+        <div class="box content">
+            <p>Content</p>
+            <h1>Read Local JSON File Example</h1>
+            <input type="file" id="fileInput" accept=".json">
+            <ul id="nameList"></ul>
+        </div>
+
+    <div class="footer">
+        <p>Footer</p>
+    </div>
+
+    <script src="../scripts/scripts.js"></script>
+    <script src="../scripts/server_calls.js"></script>
+</body>
+</html>

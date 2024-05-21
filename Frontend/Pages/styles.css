@@ -1,0 +1,109 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Add some margin */
+    cursor: pointer; /* Pointer/hand icon on hover */
+    border-radius: 8px; /* Rounded corners */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.header, .footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+.container {
+    display: flex;
+}
+.box {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 10px;
+}
+
+.sidebar {
+    flex: 1; /* Adjust the flex property to distribute space */
+    background-color: #f9f9f9;
+    max-width: 250px; /* Set a maximum width for the sidebar */
+}
+.content {
+    flex: 2;
+}
+.sidebar h2 {
+    margin-top: 0;
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    display: block;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.sidebar ul li a:hover {
+    background-color: #ddd;
+}
+
+#entity_list {
+    list-style-type: none;
+    padding: 0;
+}
+#entity_list li {
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+}
+.input-container {
+    margin-bottom: 20px;
+}
+
+.dot-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.on {
+    background-color: green;
+}
+.dot.off {
+    background-color: red;
+}
+.description {
+    margin-right: 20px;
+}
+#performanceChart {
+    max-width: 100%;
+    height: auto;
+}
