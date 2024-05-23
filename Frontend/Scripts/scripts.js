@@ -64,26 +64,6 @@ function toggle_dots() {
     });
 }
 
-document.getElementById('fileInput').addEventListener('change', readFile);
-
-function readFile(event) {
-    const file = event.target.files[0];
-    if (!file) {
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const data = JSON.parse(e.target.result);
-            displayNames(data.users);
-        } catch (error) {
-            console.error('Error parsing JSON:', error);
-        }
-    };
-    reader.readAsText(file);
-}
-
 function displayNames(users) {
     const nameList = document.getElementById('nameList');
     nameList.innerHTML = ''; // Clear any existing content
