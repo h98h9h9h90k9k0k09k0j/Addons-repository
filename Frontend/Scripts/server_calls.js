@@ -27,7 +27,7 @@ function detection_selection() {
         alert('Please choose a valid option');
         return;
     }
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
 }
 
@@ -37,7 +37,7 @@ async function get_client_list(url) {
         type: 'clients',
         query: 'get_list',
     };
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
     //logic for adding json response to frontend goes here.
 }
@@ -55,7 +55,7 @@ async function get_stats(url) {
         type: 'statistics',
         query: 'get_stats',
     };
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
 }
 
@@ -64,7 +64,7 @@ async function start_server(url) {
         type: 'server',
         query: 'server_start',
     };
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
 }
 
@@ -73,7 +73,7 @@ async function stop_server(url) {
         type: 'server',
         query: 'server_stop',
     };
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
 }
 
@@ -82,6 +82,6 @@ function get_server_status(url) {
         type: 'server',
         query: 'server_status',
     };
-    const jsonResponse = sendJsonPayload(url, payload);
+    const jsonResponse = send_json_payload(url, payload);
     return jsonResponse;
 }
