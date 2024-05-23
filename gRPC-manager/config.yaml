@@ -1,7 +1,7 @@
 name: "Server for gRPC"
 description: "Server for testing gRPC setup"
 version: "1.0.2"
-slug: "gRPC-server"
+slug: "grpc-server"
 init: false
 arch:
   - aarch64
@@ -17,11 +17,9 @@ ports:
   8554/tcp: 8554
   1234/tcp: 1234
   9000/tcp: 9000
-#websocket_url: "ws://0.0.0.0:3000"
 hassio_api: true
 host_dbus: true
 host_network: true
-# Hvis ingress er nødvendigt
 ingress: true
 ingress_port: 3030
 ingress_entry: "/app"
