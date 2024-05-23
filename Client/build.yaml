@@ -1,0 +1,7 @@
+build_from:
+  aarch64: "aleksanderrdl/hass-distribute-addon:client_gRPC"
+  amd64: "aleksanderrdl/hass-distribute-addon:client_gRPC"
+
+
+args:
+  TEMPIO_VERSION: "2021.09.0"
