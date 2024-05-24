@@ -31,20 +31,28 @@ function detection_selection() {
     return jsonResponse;
 }
 
-async function get_client_list(url) {
-    //Ved ik om server url er statisk eller om vi skal lave den dynamisk.
-    const payload = {
-        type: 'clients',
-        query: 'get_list',
-    };
-    const jsonResponse = send_json_payload(url, payload);
-    return jsonResponse;
-    //logic for adding json response to frontend goes here.
+function list_clients() {
+    //Erstat url med korrekte endpoint
+    const url = 'http://homeassistant.local:5000/list_clients';
+    
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 function add_client(client_id, address) {
     //Erstat url med korrekte endpoint
-    const url = 'http://your-server-address/add_client';
+    const url = 'http://homeassistant.local:5000/add_client';
 
     const data = {
         client_id: client_id,
@@ -69,7 +77,7 @@ function add_client(client_id, address) {
 
 function delete_client(client_id) {
     //Erstat url med korrekte endpoint
-    const url = 'http://your-server-address/delete_client';
+    const url = 'http://homeassistant.local:5000/delete_client';
 
     const data = {
         client_id: client_id,
@@ -138,4 +146,9 @@ document.getElementById('delete_client_form').addEventListener('submit', functio
     event.preventDefault();
     const client_id = document.getElementById('delete_client_id').value;
     delete_client(client_id);
+});
+
+document.getElementById('list_clients_form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    list_clients();
 });
