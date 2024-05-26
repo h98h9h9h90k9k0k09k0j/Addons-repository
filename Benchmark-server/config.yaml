@@ -1,0 +1,40 @@
+name: "Server for local benchmarking"
+description: "Server for local benchmarking"
+version: "1.0.0"
+slug: "benchmarking-server"
+init: false
+arch:
+  - aarch64
+  - amd64
+startup: services
+#image: local/{aarch64}-distribute-video:latest
+ports:
+  8080/tcp: 8080
+  3030/tcp: 3030
+  5000/tcp: 5000
+  50051/tcp: 50051
+  1935/tcp: 1935
+  8554/tcp: 8554
+  1234/tcp: 1234
+  9000/tcp: 9000
+hassio_api: true
+host_dbus: true
+host_network: true
+ingress: true
+ingress_port: 3030
+ingress_entry: "/app"
+ingress_stream: true
+video: true
+usb: true
+privileged:
+  - DAC_READ_SEARCH
+  - SYS_ADMIN
+map:
+  - media:rw
+  - share:rw
+# device_id: "abcde"
+devices: 
+ - /dev/video0:/dev/video0
+ - /dev/video1:/dev/video1
+apparmor: false
+uart: true
