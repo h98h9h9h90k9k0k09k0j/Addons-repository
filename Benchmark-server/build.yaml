@@ -1,6 +1,6 @@
 build_from:
-  aarch64: "aleksanderrdl/hass-distribute-addon:benchmarking"
-  amd64: "aleksanderrdl/hass-distribute-addon:benchmarking"
+  aarch64: "aleksanderrdl/hass-distribute-addon:server_benchmarking"
+  amd64: "aleksanderrdl/hass-distribute-addon:server_benchmarking"
 
 
 args:
