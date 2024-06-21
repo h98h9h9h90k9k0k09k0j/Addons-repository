@@ -133,9 +133,3 @@ document.getElementById('add_client_form').addEventListener('submit', function(e
     const address = document.getElementById('add_client_address').value;
     add_client(client_id, address);
 });
-
-document.getElementById('delete_client_form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const client_id = document.getElementById('delete_client_id').value;
-    delete_client(client_id);
-});
