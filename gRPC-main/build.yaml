@@ -1,6 +1,6 @@
 build_from:
-  aarch64: "aleksanderrdl/hass-distribute-addon:server_gRPC"
-  amd64: "aleksanderrdl/hass-distribute-addon:server_gRPC"
+  aarch64: "aleksanderrdl/hass-distribute-addon:gRPC_main_final"
+  amd64: "aleksanderrdl/hass-distribute-addon:gRPC_main_final"
 
 
 args:
