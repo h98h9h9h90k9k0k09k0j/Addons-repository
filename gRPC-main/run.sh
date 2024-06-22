@@ -9,8 +9,8 @@ python -m grpc_tools.protoc -I/app/server --python_out=/app/server --grpc_python
 echo "generated protobuf files"
 
 # Start the main application
-echo "starting the server"
-python /app/server/main.py
+echo "starting the main addon"
+python /app/addon/main.py
 
 echo "waiting for process to exit"
 wait -n
