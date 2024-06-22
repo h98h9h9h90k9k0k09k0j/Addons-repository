@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../scripts/page_switcher.js"></script>
+</head>
+<body>
+    <div class="header">
+        <ul>
+            <li>
+                <a href="frontend.html">
+                    <span>Return</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="box sidebar">
+            <div class="form-group">
+                <button type="submit" id="startStreamButton">Start Stream</button>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="stopStreamButton">Stop Stream</button>
+            </div>
+        </div>
+
+        <div class="box content">
+            <h3>Stream Manager</h3>
+            <div class="form-group">
+                <label for="webcam">Choose an available camera to stream:</label>
+                <select id="webcam" name="options">
+                    <option value="none">Select an option</option>
+                    <option value="facial">pc_webcam.mp3</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="detect_option">Choose a detection option:</label>
+                <select id="detect_option">
+                    <option value="facial-recognition">Facial Recognition</option>
+                    <option value="motion-detection">Motion Detection</option>
+                    <option value="emotion-detection">Emotion Detection</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="framerate_option">Choose framerate:</label>
+                <select id="framerate_option">
+                    <option value="framerate_30">Not Implemented Yet</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="resolution_option">Choose a resolution:</label>
+                <select id="resolution_option">
+                    <option value="resolution_940">Not Implemented Yet</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <button type="submit">Commit Stream to Device</button>
+            </div>
+
+            <div class="box content">
+                <label>
+                    <input type="checkbox" id="toggleCheckbox">
+                    Show Camera
+                </label>
+                <div class="toggleDiv">
+                    <video width="600" height="320" controls>
+                        <source src="../Test.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="box content">
+            <h1>Stream Manager</h1>
+            <div class="toggleDiv">
+                <p>This content is shown or hidden based on the checkbox state.</p>
+            </div>
+            <label>
+                <input type="checkbox" id="toggleScreenshot">
+                Show Screenshot
+            </label>
+            <div class="notificationDiv">
+                <p>Notification: New Face Detected</p>
+                <img src="christian.png" alt="Screenshot Placeholder" id="notificationImage">
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+    </div>
+
+    <script src="../scripts/frontend2_scripts.js"></script>
+</body>
+</html>
