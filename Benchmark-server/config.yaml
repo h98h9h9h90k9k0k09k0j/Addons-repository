@@ -1,7 +1,7 @@
-name: "Server for local benchmarking"
-description: "Server for local benchmarking"
+name: "Benchmarking addon"
+description: "Addon for benchmarking workloads locally"
 version: "1.0.0"
-slug: "benchmarking-server"
+slug: "benchmarking-addon"
 init: false
 arch:
   - aarch64

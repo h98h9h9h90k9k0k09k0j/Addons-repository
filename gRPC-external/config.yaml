@@ -1,13 +1,12 @@
-name: "Server for gRPC"
-description: "Server for testing gRPC setup"
-version: "1.0.2"
-slug: "grpc-server"
+name: "External gRPC addon"
+description: "addon hosting the gRPC on the external device"
+version: "1.0.0"
+slug: "grpc-external"
 init: false
 arch:
   - aarch64
   - amd64
 startup: services
-#image: local/{aarch64}-distribute-video:latest
 ports:
   8080/tcp: 8080
   3030/tcp: 3030
@@ -24,17 +23,8 @@ ingress: true
 ingress_port: 3030
 ingress_entry: "/app"
 ingress_stream: true
-video: true
-usb: true
-privileged:
-  - DAC_READ_SEARCH
-  - SYS_ADMIN
 map:
   - media:rw
   - share:rw
-# device_id: "abcde"
-devices: 
- - /dev/video0:/dev/video0
- - /dev/video1:/dev/video1
 apparmor: false
 uart: true
