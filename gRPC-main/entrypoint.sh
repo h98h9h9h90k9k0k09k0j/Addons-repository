@@ -1,7 +1,8 @@
 #!/bin/bash
-echo "IM RUNNING"
+
 # Start nginx with debug options
-nginx -g "daemon off;error_log /dev/stdout debug;" &
+nginx -c /usr/share/nginx/html/nginx.conf -g "daemon off;" &
+echo "IM RUNNING"
 
 # Run the custom startup script
 bash run.sh

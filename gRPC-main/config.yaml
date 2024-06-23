@@ -19,8 +19,9 @@ ports:
 hassio_api: true
 host_dbus: true
 host_network: true
+webui: "http://[HOST]:[PORT:8080]"
 ingress: true
-ingress_port: 3030
+ingress_port: 8099
 ingress_entry: "/app"
 ingress_stream: true
 video: true
