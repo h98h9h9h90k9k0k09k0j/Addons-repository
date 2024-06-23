@@ -36,11 +36,15 @@ button:hover, .form-group button:hover {
     background-color: #333;
     color: white;
     padding: 10px;
+    text-align: center;
 }
 
 /* Container Styles */
 .container {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
 }
 
 .box {
@@ -48,168 +52,10 @@ button:hover, .form-group button:hover {
     padding: 20px;
     border: 1px solid #ddd;
     margin: 10px;
-}
-
-.sidebar {
-    flex: 1; /* Adjust the flex property to distribute space */
-    background-color: #f9f9f9;
-    max-width: 250px; /* Set a maximum width for the sidebar */
-}
-
-.content {
-    flex: 2;
-}
-
-.box.content {
-    border: 1px solid #ccc;
-    padding: 20px;
     border-radius: 8px;
-    width: 300px;
-    margin: 0 auto;
     background-color: #f9f9f9;
 }
 
-/* Sidebar Styles */
-.sidebar h2 {
-    margin-top: 0;
-}
-
-.sidebar ul, ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 10px;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: #333;
-    padding: 10px;
-    display: block;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.sidebar ul li a:hover {
-    background-color: #ddd;
-}
-
-/* Entity List Styles */
-#entity_list {
-    list-style-type: none;
-    padding: 0;
-}
-
-#entity_list li {
-    padding: 10px;
-    background-color: #f4f4f4;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-}
-
-/* Input Container Styles */
-.input-container {
-    margin-bottom: 20px;
-}
-
-/* Dot Container Styles */
-.dot-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.dot {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-.dot.on {
-    background-color: green;
-}
-
-.dot.off {
-    background-color: red;
-}
-
-/* Description Styles */
-.description {
-    margin-right: 20px;
-}
-
-/* Performance Chart Styles */
-#performanceChart {
-    max-width: 100%;
-    height: auto;
-}
-
-/* List Item Styles */
-li {
-    background: #fff;
-    margin: 10px 0;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    transition: background 0.3s, border-color 0.3s;
-}
-
-li:hover {
-    background: #f0f0f0;
-    border-color: #888;
-}
-
-li img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-li span {
-    font-size: 1.2em;
-    color: #555;
-}
-
-li a {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-/* Toggle Div Styles */
-.toggleDiv {
-    display: none; /* Hide by default */
-    margin-top: 20px;
-    padding: 20px;
-    background: #eee;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Notification Div Styles */
-.notificationDiv {
-    margin-top: 20px;
-    padding: 10px;
-    background: #ffcc00;
-    border: 2px solid #ff9900;
-    border-radius: 4px;
-    color: #333;
-}
-
-.notificationDiv img {
-    display: none; /* Hide by default */
-    margin: 10px auto;
-    max-width: 100%;
-    height: auto;
-}
-
-/* Form Group Styles */
 .form-group {
     margin-bottom: 15px;
 }
@@ -229,4 +75,33 @@ li a {
 h3 {
     text-align: center;
     margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+li:hover {
+    background: #f0f0f0;
+    border-color: #888;
+}
+
+li a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }

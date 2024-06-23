@@ -1,3 +1,10 @@
+document.getElementById('add_device_form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const deviceId = document.getElementById('device_id').value;
+    const deviceAddress = document.getElementById('device_address').value;
+    addDevice(deviceId, deviceAddress);
+});
+
 async function loadDevices() {
     try {
         const response = await fetch('http://homeassistant.local:5000/list_clients', {
@@ -14,25 +21,25 @@ async function loadDevices() {
         const data = await response.json();
         const devices = data.clients;
 
-        const ul = document.getElementById('deviceList');
+        const ul = document.getElementById('device_list');
         ul.innerHTML = ''; // Clear existing list
 
         devices.forEach(device => {
-            addDeviceElement(device.client_id, 'frontend2.html'); // Adjust the link if necessary
+            addDeviceElement(device.client_id, 'device.html');
         });
     } catch (error) {
         console.error('Error loading devices:', error);
     }
 }
 
-async function addDevice(client_id, address) {
+async function addDevice(deviceId, deviceAddress) {
     try {
         const response = await fetch('http://homeassistant.local:5000/add_client', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ client_id, address })
+            body: JSON.stringify({ client_id: deviceId, address: deviceAddress })
         });
 
         if (!response.ok) {
@@ -50,7 +57,7 @@ async function addDevice(client_id, address) {
 }
 
 function addDeviceElement(name, link) {
-    const ul = document.getElementById('deviceList');
+    const ul = document.getElementById('device_list');
     const li = document.createElement('li');
     const a = document.createElement('a');
     const span = document.createElement('span');
@@ -67,14 +74,6 @@ function addDeviceElement(name, link) {
     li.appendChild(a);
     ul.appendChild(li);
 }
-
-
-document.getElementById('add_client_form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const client_id = document.getElementById('add_client_id').value;
-    const address = document.getElementById('add_client_address').value;
-    addDevice(client_id, address);
-});
 
 // Initial load
 loadDevices();
