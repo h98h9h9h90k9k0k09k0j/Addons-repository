@@ -10,9 +10,6 @@ RUN \
 RUN apt-get update && apt-get install -y \
     nginx
 
-#Copy our conf into the nginx http.d folder.
-COPY ingress.conf /etc/nginx/http.d/
-
 # Copy the nginx configuration file
 COPY www/nginx.conf /etc/nginx/conf.d/default.conf
 
