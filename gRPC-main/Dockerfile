@@ -8,10 +8,13 @@ RUN \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
 
 RUN apt-get update && apt-get install -y \
-    nginx
+    nginx dos2unix
 
 # Copy the nginx configuration file
 COPY www/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy WebUI files
+COPY www /usr/share/nginx/html
 
 # copy run file
 COPY run.sh /run.sh
