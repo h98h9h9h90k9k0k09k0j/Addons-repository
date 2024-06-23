@@ -9,7 +9,6 @@ arch:
 startup: services
 ports:
   8080/tcp: 8080
-  8099/tcp: 8099
   3030/tcp: 3030
   5000/tcp: 5000
   50051/tcp: 50051
@@ -22,8 +21,7 @@ host_dbus: true
 host_network: true
 webui: "http://[HOST]:[PORT:8080]"
 ingress: true
-ingress_port: 8099
-ingress_entry: "/app"
+ingress_entry: "/"
 ingress_stream: true
 video: true
 usb: true

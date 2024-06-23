@@ -15,8 +15,6 @@ COPY ingress.conf /etc/nginx/http.d/
 
 # Copy the nginx configuration file
 COPY www/nginx.conf /etc/nginx/conf.d/default.conf
-# Copy WebUI files
-COPY www /usr/share/nginx/html
 
 # copy run file
 COPY run.sh /run.sh
