@@ -18,16 +18,7 @@ async function loadDevices() {
         ul.innerHTML = ''; // Clear existing list
 
         devices.forEach(device => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            const span = document.createElement('span');
-
-            a.href = 'frontend2.html'; // Adjust if needed
-            span.textContent = device.client_id;
-
-            a.appendChild(span);
-            li.appendChild(a);
-            ul.appendChild(li);
+            addDeviceElement(device.client_id, 'frontend2.html'); // Adjust the link if necessary
         });
     } catch (error) {
         console.error('Error loading devices:', error);
@@ -56,6 +47,20 @@ async function addDevice(client_id, address) {
     } catch (error) {
         console.error('Error adding device:', error);
     }
+}
+
+function addDeviceElement(name, link) {
+    const ul = document.getElementById('deviceList');
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    const span = document.createElement('span');
+
+    a.href = link;
+    span.textContent = name;
+
+    a.appendChild(span);
+    li.appendChild(a);
+    ul.appendChild(li);
 }
 
 document.getElementById('add_client_form').addEventListener('submit', function(event) {
