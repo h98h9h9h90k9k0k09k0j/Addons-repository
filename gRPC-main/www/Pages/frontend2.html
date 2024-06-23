@@ -100,6 +100,68 @@
     <div class="footer">
     </div>
 
-    <script src="../Scripts/frontend2_scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientId = sessionStorage.getItem('clientId');
+            console.log('Interacting with device:', clientId);
+            // Add further interactions with the device here using the clientId
+        });
+
+        document.getElementById('startStreamButton').addEventListener('click', () => {
+            //Server Url Goes Here
+            fetch('http://your-server-url/start-stream', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ client_id: sessionStorage.getItem('clientId') })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Start Stream Response:', data);
+                // Handle success or error response here
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('stopStreamButton').addEventListener('click', () => {
+            //Server Url Goes Here
+            fetch('http://your-server-url/stop-stream', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ client_id: sessionStorage.getItem('clientId') })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Stop Stream Response:', data);
+                // Handle success or error response here
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('toggleCheckbox').addEventListener('change', function() {
+            var toggleDiv = document.querySelector('.toggleDiv');
+            if (this.checked) {
+                toggleDiv.style.display = 'block';
+            } else {
+                toggleDiv.style.display = 'none';
+            }
+        });
+
+        document.getElementById('toggleScreenshot').addEventListener('change', function() {
+            var notificationImage = document.getElementById('notificationImage');
+            if (this.checked) {
+                notificationImage.style.display = 'block';
+            } else {
+                notificationImage.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

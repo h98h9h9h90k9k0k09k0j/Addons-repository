@@ -56,12 +56,18 @@ function addDeviceElement(name, link) {
     const span = document.createElement('span');
 
     a.href = link;
+    a.setAttribute('data-client-id', name); // Set a data attribute to pass client id to the new page
+    a.addEventListener('click', function(event) {
+        event.preventDefault();
+        navigateTo(link, name);
+    });
     span.textContent = name;
 
     a.appendChild(span);
     li.appendChild(a);
     ul.appendChild(li);
 }
+
 
 document.getElementById('add_client_form').addEventListener('submit', function(event) {
     event.preventDefault();
