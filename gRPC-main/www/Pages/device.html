@@ -3,47 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Management</title>
-    <link rel="stylesheet" href="../Pages/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Device Page</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Device Management</h1>
-        <a href="index.html">Return to Device Manager</a>
-    </div>
     <div class="container">
-        <div class="box form-box">
-            <h3>Processing Mode</h3>
-            <div class="form-group">
-                <label for="processing_mode">Choose a processing mode:</label>
-                <select id="processing_mode">
-                    <option value="facial-recognition">Facial Recognition</option>
-                    <option value="motion-detection">Motion Detection</option>
-                    <option value="emotion-detection">Emotion Detection</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button id="start_stream_button">Start Stream</button>
-                <button id="stop_stream_button">Stop Stream</button>
-            </div>
-        </div>
-        <div class="box alerts-box">
+        <h2 id="device-title"></h2>
+        <form id="processing-form">
+            <label for="processing-type">Processing Type:</label>
+            <select id="processing-type">
+                <option value="motion_detection">Motion Detection</option>
+                <option value="face_recognition">Face Recognition</option>
+                <option value="emotion_detection">Emotion Detection</option>
+            </select>
+            <button type="submit">Start Stream</button>
+        </form>
+        <div class="alerts-container">
             <h3>Alerts</h3>
-            <div id="alerts">
-                <!-- Alerts will be dynamically added here -->
-            </div>
-            <div class="form-group">
-                <button id="get_alert_screenshots_button">Get Alert Screenshots</button>
-            </div>
-            <div id="alert_screenshots">
-                <!-- Alert screenshots will be dynamically added here -->
-            </div>
+            <ul id="alerts-list"></ul>
         </div>
+        <button id="fetch-screenshots">Fetch Screenshots</button>
+        <div class="screenshots-container" id="screenshots-container"></div>
     </div>
-    <div class="footer"></div>
-
-    <script src="../Scripts/page_switcher.js"></script>
-    <script src="../Scripts/device_scripts.js"></script>
+    <script src="device.js"></script>
 </body>
 </html>
