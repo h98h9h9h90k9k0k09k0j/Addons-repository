@@ -6,6 +6,7 @@ document.getElementById('add_device_form').addEventListener('submit', function(e
 });
 
 async function loadDevices() {
+    console.log('Entering loadDevices function');
     try {
         const response = await fetch('http://homeassistant.local:5000/list_clients', {
             method: 'GET',
@@ -15,10 +16,12 @@ async function loadDevices() {
         });
 
         if (!response.ok) {
+            console.error('Failed to load devices, status:', response.status);
             throw new Error(`Failed to load devices: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Devices loaded:', data);
         const devices = data.clients;
 
         const ul = document.getElementById('device_list');
@@ -33,6 +36,7 @@ async function loadDevices() {
 }
 
 async function addDevice(deviceId, deviceAddress) {
+    console.log('Entering addDevice function with deviceId:', deviceId, 'and deviceAddress:', deviceAddress);
     try {
         const response = await fetch('http://homeassistant.local:5000/add_client', {
             method: 'POST',
@@ -43,6 +47,7 @@ async function addDevice(deviceId, deviceAddress) {
         });
 
         if (!response.ok) {
+            console.error('Failed to add device, status:', response.status);
             throw new Error(`Failed to add device: ${response.status}`);
         }
 
@@ -57,6 +62,7 @@ async function addDevice(deviceId, deviceAddress) {
 }
 
 function addDeviceElement(name, link) {
+    console.log('Entering addDeviceElement function with name:', name, 'and link:', link);
     const ul = document.getElementById('device_list');
     const li = document.createElement('li');
     const a = document.createElement('a');

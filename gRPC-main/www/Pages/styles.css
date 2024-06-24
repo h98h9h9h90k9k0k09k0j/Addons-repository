@@ -56,6 +56,18 @@ button:hover, .form-group button:hover {
     background-color: #f9f9f9;
 }
 
+.form-box {
+    max-width: 400px;
+}
+
+.list-box {
+    max-width: 600px;
+}
+
+.alerts-box {
+    flex: 2;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
